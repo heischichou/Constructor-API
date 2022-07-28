@@ -1,5 +1,17 @@
 # Constructor API
-Constructor API is a port over of a custom PHP-based API I made from scratch during my [school project](https://github.com/heischichou/NJC-Tattoo/). This API comprises primarily a MySQL Query Builder from which this repository derives its name. It also contains helper functions for general utility.
+Constructor API is a port over of a custom PHP-based API I made from scratch during [my school project](https://github.com/heischichou/NJC-Tattoo/). This API comprises primarily a MySQL Query Builder from which this repository derives its name. It also contains helper functions for general utility.
+
+## Setup
+To use the API, simply paste the following lines of code in your PHP document. You may change the constructor arguments as necessary.
+```php
+require_once 'api.php';
+$api = new api($user, $password, $db);
+```
+Example:
+```php
+require_once 'api.php';
+$api = new api("root", "", "sample_db");
+```
 
 ## API Documentation
 
