@@ -51,12 +51,22 @@ class API {
         }
     }
 
+    // return connection to database
+    public function db_return(){
+        return $this->conn;
+    }
+
     /***** CLOSE CONNECTION *****/
 
-    // close connection to database
-    public function db_close(){
+    // disconnect from database
+    public function db_disconnect(){
         $this->conn->close();
         $this->conn = null;
+    }
+
+    // close connection to database
+    public function db_close(&$conn){
+        return $conn->close();
     }
 
     /***** HELPER FUNCTIONS *****/
