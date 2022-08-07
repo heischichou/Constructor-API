@@ -1,9 +1,12 @@
 <?php
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+// change the timezone as necessary
 date_default_timezone_set("Asia/Manila");
 
 /*
- * @author Jan Michael Garot (https://github.com/heischichou)
+ * PHP Constructor API by
+ * @author Jan Michael Garot/Heischichou (https://github.com/heischichou)
 */
 class API {
     private $server = "localhost";
@@ -27,6 +30,33 @@ class API {
         } else {
             $this->conn->set_charset('utf8mb4');
         }
+    }
+
+    // connect to database
+    public function db_connect($user, $password, $db){
+        $this->conn = new mysqli($this->server, $this->user, $this->password, $this->db, $this->port);
+        if($this->conn != null){
+            die("Failed to establish connection. Error code " . $this->conn->connect_errno . " - " . $this->conn->connect_error );
+        } else {
+            $this->user = $user;
+            $this->password = $password;
+            $this->db = $db;
+
+            $this->conn = new mysqli($this->server, $this->user, $this->password, $this->db, $this->port);
+            if($this->conn->connect_error){
+                die("Failed to establish connection. Error code " . $this->conn->connect_errno . " - " . $this->conn->connect_error );
+            } else {
+                $this->conn->set_charset('utf8mb4');
+            }
+        }
+    }
+
+    /***** CLOSE CONNECTION *****/
+
+    // close connection to database
+    public function db_close(){
+        $this->conn->close();
+        $this->conn = null;
     }
 
     /***** HELPER FUNCTIONS *****/
@@ -65,7 +95,7 @@ class API {
 
     // string validation
     public function is_string($data) {
-        return (is_object($data) && method_exists($data, '__toString' ));
+        return (is_object($data) && method_exists($data, '__toString'));
     }
 
     // image validation
@@ -77,8 +107,6 @@ class API {
 
             $file_ext = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
             $file_type = strtolower($image['type']);
-            $file_tmp_name = $image['tmp_name'];
-            $file_size = $image['size'];
 
             // check file extension
             if(!in_array($file_ext, $ext_whitelist)){
@@ -87,7 +115,7 @@ class API {
             }
 
             // check if file is a valid image
-            if(!getimagesize($file_tmp_name)){
+            if(!getimagesize($image['tmp_name'])){
                 $checks = false;
             }
 
@@ -97,7 +125,7 @@ class API {
             }
 
             // check if file exceeds image size limit
-            if($file_size > $size_limit){
+            if($image['size'] > $size_limit){
                 $checks = false;
             }
         }
@@ -201,11 +229,12 @@ class API {
         return '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
     }
 
-    // error reporting
+    // report error
     public function error(){
         return $this->conn->error;
     }
 
+    // report error code
     public function errno(){
         return $this->conn->errno;
     }
@@ -215,13 +244,14 @@ class API {
         if($this->is_valid_time($time)){
             $hour = date("H", strtotime($time));
 
+            // change starting and ending hours to match your business hours
             $checks = ($hour >= 8 && $hour <= 18);
         }
 
         return $checks;
     }
 
-    // logout
+    // user logout
     public function logout(){
         setcookie(session_id(), "", time() - 3600);
         session_destroy();
@@ -230,7 +260,7 @@ class API {
 
     /***** MYSQL HELPERS *****/
 
-    // mysql table
+    // mysql table clause
     public function table(&$string, $params){
         if(!empty($string) && !empty($params)){
             if(!is_array($params)){
@@ -372,14 +402,14 @@ class API {
         }
     }
 
-    // mysql from
+    // mysql from clause
     public function from(&$string){
         $string = $string . "FROM ";
     }
 
     /***** INSERT *****/
 
-    // mysql insert
+    // mysql insert clause
     public function insert(){
         return "INSERT INTO ";
     }
@@ -399,14 +429,14 @@ class API {
         }  
     }
 
-    // mysql values
+    // mysql values clause
     public function values(&$string){
         $string = $string . "VALUES ";
     }
 
     /***** UPDATE *****/
 
-    // mysql update
+    // mysql update clause
     public function update(){
         return "UPDATE ";
     }
@@ -444,7 +474,7 @@ class API {
 
     /***** DELETING *****/
 
-    // mysql delete
+    // mysql delete clause
     public function delete(){
         return "DELETE ";
     }
@@ -516,12 +546,7 @@ class API {
             }
         }
     }
-
-    // getting column value from returned result set
-    public function get_bound_result(&$param, $bound_result){
-        $param = $bound_result;
-    }
-
+    
     // php mysqli get_result()
     public function get_result(&$statement){
         return $statement->get_result();
