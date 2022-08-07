@@ -13,18 +13,13 @@ require_once 'api.php';
 $api = new api("root", "", "sample_db");
 ```
 
-To connect to a database, paste the following lines of code in your PHP document.
+To set the API's database connection, paste the following lines of code in your PHP document.
 ```php
 $api->db_connect($user, $password, $db);
 ```
 Example:
 ```php
-$api = db_connect("root", "", "sample_db");
-```
-
-To close the connection to the database, paste the following lines of code in your PHP document.
-```php
-$api->db_close();
+$api->db_connect("root", "", "sample_db");
 ```
 
 ## API Documentation
@@ -205,6 +200,32 @@ $data = $api->generate_color();
 
 <details><summary>MySQLi Functions</summary>
 <p>
+
+## $api->db_return()
+Returns the API's database connection.
+```php
+$api->db_connect("root", "", "sample_db");
+$conn = $api->db_return();
+// $conn = 12345;
+```
+
+
+## $api->db_disconnect()
+Close the API's database connection.
+```php
+$api->db_disconnect();
+$conn = $api->db_return();
+// $conn = null;
+```
+
+
+## $api->db_close()
+Close the given database connection. Returns true on success, false on failure.
+```php
+$conn = $api->db_return();
+...
+$api->db_return($conn);
+```
 
 <details><summary>Clause Helpers</summary>
 <p>
