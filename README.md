@@ -201,12 +201,14 @@ $data = $api->generate_color();
 <details><summary>MySQLi Functions</summary>
 <p>
 
+<details><summary>Database Functions</summary>
+<p>
+
 ## $api->db_return()
 Returns the API's database connection.
 ```php
 $api->db_connect("root", "", "sample_db");
 $conn = $api->db_return();
-// $conn = 12345;
 ```
 
 
@@ -226,6 +228,9 @@ $conn = $api->db_return();
 ...
 $api->db_return($conn);
 ```
+
+</p>
+</details>
 
 <details><summary>Clause Helpers</summary>
 <p>
