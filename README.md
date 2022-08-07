@@ -19,7 +19,7 @@ $api->db_connect($user, $password, $db);
 ```
 Example:
 ```php
-$api = new api("root", "", "sample_db");
+$api = db_connect("root", "", "sample_db");
 ```
 
 To close the connection to the database, paste the following lines of code in your PHP document.
