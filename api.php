@@ -102,7 +102,8 @@ class API {
     public function validate_image($image, $size_limit){
         $checks = boolval(!empty($image['name']) && !empty($image['type']) && empty($image['error']));
         if($checks){
-            $ext_whitelist= array('jpg','jpeg','png','gif');
+            // change whitelist as necessary
+            $ext_whitelist = array('jpg','jpeg','png','gif');
             $type_whitelist = array('image/jpg', 'image/jpeg', 'image/png', 'image/gif');
 
             $file_ext = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
@@ -546,7 +547,7 @@ class API {
             }
         }
     }
-    
+
     // php mysqli get_result()
     public function get_result(&$statement){
         return $statement->get_result();
