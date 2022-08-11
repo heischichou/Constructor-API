@@ -32,28 +32,28 @@ Santizes the given data.
 Example of integer sanitization, do
 ```php
 $data = "1Lorem2ipsum3dolor4sit5amet";
-$data = $api->sanitize_data($data, "int");
+$api->sanitize_data($data, "int");
 // $data = 12345;
 ```
 
 Example of float sanitization, do
 ```php
 $data = "1Lorem2ipsum3dolor4sit5amet";
-$data = $api->sanitize_data($data, "float");
+$api->sanitize_data($data, "float");
 // $data = 12345.67;
 ```
 
 Example of email sanitization, do
 ```php
 $data = "john.doe@test.com";
-$data = $api->sanitize_data($data, "email");
+$api->sanitize_data($data, "email");
 // $data = "john.doe@test.com";
 ```
 
 Example of string (default case) sanitization, do
 ```php
 $data = " <script>console.log('This is an attack.')</script> "
-$data = $api->sanitize_data($data, "string");
+$api->sanitize_data($data, "string");
 // $data = "console.log('This is an attack');";
 ```
 
@@ -62,133 +62,133 @@ $data = $api->sanitize_data($data, "string");
 Validate the given data. Returns true if the data is valid, false otherwise.
 Integer validation valid case
 ```php
-$data = $api->validate_data(12345, "int");
-// $data = true;
+$boolean = $api->validate_data(12345, "int");
+// $boolean = true;
 ```
 
 Integer validation invalid case
 ```php
-$data = $api->validate_data("1Lorem2ipsum3dolor4sit5amet", "int");
-// $data = false;
+$boolean = $api->validate_data("1Lorem2ipsum3dolor4sit5amet", "int");
+// $boolean = false;
 ```
 
 Float validation valid case
 ```php
-$data = $api->validate_data(12345.67, "float");
-// $data = true;
+$boolean = $api->validate_data(12345.67, "float");
+// $boolean = true;
 ```
 
 Float validation invalid case
 ```php
-$data = $api->validate_data("1Lorem2ipsum3dolor4sit5amet.67", "float");
-// $data = false;
+$boolean = $api->validate_data("1Lorem2ipsum3dolor4sit5amet.67", "float");
+// $boolean = false;
 ```
 
 Email validation valid case
 ```php
-$data = $api->sanitize_data("john.doe@test.com", "email");
-// $data = true;
+$boolean = $api->sanitize_data("john.doe@test.com", "email");
+// $boolean = true;
 ```
 
 Email validation invalid case
 ```php
-$data = $api->sanitize_data("invalid-email#test+com", "email");
-// $data = 'false';
+$boolean = $api->sanitize_data("invalid-email#test+com", "email");
+// $boolean = 'false';
 ```
 
 Date validation valid case
 ```php
-$data = $api->validate_data("10-17-2000", "date");
-// $data = true;
+$boolean = $api->validate_data("10-17-2000", "date");
+// $boolean = true;
 ```
 
 Date validation invalid case - Invalid date
 ```php
-$data = $api->validate_data("02-31-2000", "date");
-// $data = false;
+$boolean = $api->validate_data("02-31-2000", "date");
+// $boolean = false;
 ```
 
 Date validation invalid case - Past date
 ```php
 // today = '05-05-2001'
-$data = $api->validate_data("05-03-2000", "date");
-// $data = false;
+$boolean = $api->validate_data("05-03-2000", "date");
+// $boolean = false;
 ```
 
 Time validation valid case
 ```php
-$data = $api->validate_data("05:30:00", "time");
-// $data = true;
+$boolean = $api->validate_data("05:30:00", "time");
+// $boolean = true;
 ```
 
 Time validation invalid case
 ```php
-$data = $api->validate_data("13:72:00", "time");
-// $data = false;
+$boolean = $api->validate_data("13:72:00", "time");
+// $boolean = false;
 ```
 
 Birthdate validation valid case
 ```php
-$data = $api->validate_data("12-1-2000", "birthdate");
-// $data = true;
+$boolean = $api->validate_data("12-1-2000", "birthdate");
+// $boolean = true;
 ```
 
 Birthdate validation invalid case - Invalid format
 ```php
-$data = $api->validate_data("13-32-1900", "birthdate");
-// $data = false;
+$boolean = $api->validate_data("13-32-1900", "birthdate");
+// $boolean = false;
 ```
 
 Birthdate validation invalid case - Less than legal age
 ```php
-$data = $api->validate_data("04-17-2020", "birthdate");
-// $data = false;
+$boolean = $api->validate_data("04-17-2020", "birthdate");
+// $boolean = false;
 ```
 
 Birthdate validation invalid case - Exceeds age limit
 ```php
-$data = $api->validate_data("08-23-1810", "birthdate");
-// $data = false;
+$boolean = $api->validate_data("08-23-1810", "birthdate");
+// $boolean = false;
 ```
 
 String (default case) valid case
 ```php
-$data = $api->sanitize_data("Hello world!", "string");
-// $data = 'true';
+$boolean = $api->sanitize_data("Hello world!", "string");
+// $boolean = 'true';
 ```
 
 
-## $api->validate_image($data, $type)
+## $api->validate_image($image, $file_size)
 Validate the given file. Returns true if the file is a valid image, false otherwise.
 Example of image validation, do
 ```php
-$data = $api->validate_image($image, $file_size);
-// $data = true;
+$boolean = $api->validate_image($image, $file_size);
+// $boolean = true;
 ```
 
 Image validation invalid case - Invalid file extension
 ```php
 // $file_ext = "image/webp";
-$data = $api->validate_image($image, 5000);
-// $data = false;
+$boolean = $api->validate_image($image, 5000);
+// $boolean = false;
 ```
 
 Image validation invalid case - Invalid file type
 ```php
 // $file_type = "webp";
-$data = $api->validate_image($image, 5000);
-// $data = false;
+$boolean = $api->validate_image($image, 5000);
+// $boolean = false;
 ```
 
 Image validation invalid case - Exceeds file size limit
 ```php
 // $file_size = 7000;
-$data = $api->validate_image($image, 5000);
-// $data = false;
+$boolean = $api->validate_image($image, 5000);
+// $boolean = false;
 ```
 
 
-## $api->sanitize_data($data, $type)
+## $api->generate-color()
 Randomly generate a hexadecimal color code.
 ```php
 $data = $api->generate_color();
@@ -236,10 +236,10 @@ $api->db_return($conn);
 <p>
 
 ## $api->table($string, $params)
-Returns the given query string with the specified tables.
+Appends the specified tables to the given query string.
 To specify a single table, do
 ```php
-$query = $api->table($query, $table);
+$api->table($query, $table);
 
 Example:
 $query = $api->select();
@@ -251,7 +251,7 @@ $api->table($query, 'table');
 
 To specify multiple tables, do
 ```php
-$query = $api->table($query, array($arg1, $arg2, ..., $argN));
+$api->table($query, array($arg1, $arg2, ..., $argN));
 
 Example:
 $query = $api->select();
@@ -293,10 +293,10 @@ $join_clause = $api->join('', $nested_join, 'table3', 'table2.column', 'table3.c
 
 
 ## $api->where($string, $cols, $params)
-Returns the given query string with the specified SQL WHERE clause.
+Appends the specified SQL WHERE clause to the given query string.
 To specify a single condition, do
 ```php
-$query = $api->where($query, $column, $param);
+$api->where($query, $column, $param);
 
 Example:
 $query = $api->select();
@@ -318,22 +318,22 @@ $api->where($query, 'table1.column', 'table2.column');
 
 To specify multiple conditions, do
 ```php
-$query = $api->order($query, array($arg1, $arg2, ..., $argN), array($arg1, $arg2, ..., $argN));
+$api->where($query, array($arg1, $arg2, ..., $argN), array($arg1, $arg2, ..., $argN));
 
 Example:
 $query = $api->select();
 $api->params($query, '*');
 $api->from($query);
 $api->table($query, 'table');
-$api->order($query, array('column1', 'column2'), array('value1', 'value2'));
+$api->where($query, array('column1', 'column2'), array('value1', 'value2'));
 // $query = 'SELECT * FROM table WHERE column1=value1 AND column2=value2;
 ```
 
 
 ## $api->limit($string, $limit)
-Returns the given query string with the specified limit.
+Appends the specified SQL LIMIT clause to the given query string.
 ```php
-$query = $api->limit($query, $int);
+$api->limit($query, $int);
 
 Example:
 $query = $api->select();
@@ -345,10 +345,10 @@ $api->limit($query, 2);
 ```
 
 ## $api->order($string, $params)
-Returns the given query string with the specified order.
+Appends the specified SQL ORDER clause to the given query string.
 To specify ordering by a single column, do
 ```php
-$query = $api->order($query, $column, $type);
+$api->order($query, $column, $type);
 
 Example:
 $query = $api->select();
@@ -360,7 +360,7 @@ $api->order($query, 'column', 'ASC');
 ```
 To specify ordering by multiple columns, do
 ```php
-$query = $api->order($query, array($arg1, $arg2, ..., $argN), array($arg1, $arg2, ..., $argN));
+$api->order($query, array($arg1, $arg2, ..., $argN), array($arg1, $arg2, ..., $argN));
 
 Example:
 $query = $api->select();
@@ -386,16 +386,16 @@ $query = $api->select();
 
 
 ## $api->params($string, $params)
-Returns the given query string with its defined parameters.
+Appends the defined parameters to given query string.
 To specify a single parameter, do
 ```php
-$query = $api->params($query, '*');
+$api->params($query, '*');
 // $query = 'SELECT * ';
 ```
 
 To specify multiple parameters, do
 ```php
-$query = $api->params($query, array($arg1, $arg2, ..., $argN));
+$api->params($query, array($arg1, $arg2, ..., $argN));
 
 Example:
 $query = $api->select();
@@ -405,7 +405,7 @@ $api->params($query, array('column1', 'column2', 'column3'));
 
 
 ## $api->from($string)
-Returns the given query string with SQL FROM.
+Appends SQL FROM to the given query string.
 ```php
 $query = $api->select();
 $api->params($query, '*');
@@ -437,9 +437,9 @@ $query = $api->insert();
 
 
 ## $api->columns($string, $params = array())
-Returns the given query string with the specified columns to insert values at.
+Appends the specified SQL table columns to the given query string
 ```php
-$query = $api->columns($query, array($arg1, $arg2, ..., $argN));
+$api->columns($query, array($arg1, $arg2, ..., $argN));
 
 Example:
 $query = $api->insert();
@@ -450,7 +450,7 @@ $api->columns($query, array('column1', 'column2', 'column3'));
 
 
 ## $api->values($string)
-Returns the given query string with SQL VALUES.
+Appends SQL VALUES to the given query string.
 ```php
 $query = $api->insert();
 $api->table($query, 'table');
@@ -484,15 +484,15 @@ $query = $api->update();
 
 
 ## $api->set($string, $cols, $params)
-Returns the given query string with the specified column-value pairs.
+Appends the specified column-value pairs to the given query string.
 To specify a single column-value pair, do
 ```php
-$query = $api->set($query, $column, $value);
+$api->set($query, $column, $value);
 ```
 
 To specify multiple column-value pairs, do
 ```php
-$query = $api->set($query, array($col1, $col2, ..., $colN), array($value1, $value2, ..., $valueN));
+$api->set($query, array($col1, $col2, ..., $colN), array($value1, $value2, ..., $valueN));
 
 Example:
 $query = $api->update();
@@ -645,7 +645,7 @@ $row = $api->fetch_assoc($res);
 
 
 ## $api->free_result(&$statement)
-Frees the memory associated with a result.
+Frees the memory associated with a result set.
 ```php
 $query = $api->select();
 ...
